@@ -17,11 +17,11 @@ rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 #Install packages needed
-COPY rpm /root/rpm
+##COPY rpm /root/rpm
 RUN yum -y localinstall /root/rpm/*.rpm
-##RUN yum install -y java-1.8.0-openjdk-headless.x86_64 ssh rsync\
-## bash-completion screen openssh-server openssh-clients libselinux;
-RUN systemctl enable sshd
+RUN yum install -y java-1.8.0-openjdk-headless.x86_64 ssh rsync\
+ bash-completion screen openssh-server openssh-clients libselinux;
+##RUN systemctl enable sshd
 RUN yum update -y;
 RUN yum clean all; \
  rm -rf /var/cache/yum;
@@ -30,8 +30,8 @@ RUN yum clean all; \
 ENV JAVA_HOME /usr/lib/jvm/jre
 
 #Hadoop things
-#https://www-us.apache.org/dist/hadoop/common/hadoop-3.0.0/hadoop-3.0.0.tar.gz
-ADD hadoop-3.0.0.tar.gz /usr/local
+#https://www-us.apache.org/dist/hadoop/common/hadoop-2.7.5/hadoop-2.7.5.tar.gz
+ADD hadoop-2.7.5.tar.gz /usr/local
 RUN ln -sf /usr/local/hadoop-3.0.0 /usr/local/hadoop
 
 #passwordless ssh (from
@@ -54,17 +54,17 @@ ENV PATH $PATH:HADOOP_PREFIX/bin
 #https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
 
 #Standalone config setting
-RUN mkdir $HADOOP_PREFIX/input
-RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
-
-#Pseudo-distributed
-#haddop-etc.tar.gz created with this
-# tar cfz hadoop-etc.tar.gz hadoop-3.0.0/etc/hadoop/{core-site.xml,hdfs-site.xml}
-ADD hadoop-etc.tar.gz /usr/local
-
-#Volume mappings for cgroup
-VOLUME [ "/sys/fs/cgroup" ]
-
-EXPOSE 22
+## RUN mkdir $HADOOP_PREFIX/input
+## RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
+## 
+## #Pseudo-distributed
+## #haddop-etc.tar.gz created with this
+## # tar cfz hadoop-etc.tar.gz hadoop-3.0.0/etc/hadoop/{core-site.xml,hdfs-site.xml}
+## ADD hadoop-etc.tar.gz /usr/local
+## 
+## #Volume mappings for cgroup
+## VOLUME [ "/sys/fs/cgroup" ]
+## 
+## EXPOSE 22
 
 CMD ["/usr/sbin/init"]
