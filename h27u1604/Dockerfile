@@ -22,7 +22,8 @@ RUN apt-get update; \
  apt-get upgrade -y; \
  apt-get install -y --no-install-recommends apt-utils locales
 RUN apt-get install -y --no-install-recommends bash-completion \
- openjdk-8-jre-headless screen openssh-server openssh-client rsync
+ openjdk-8-jre-headless screen openssh-server openssh-client rsync \
+ vim
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -48,7 +49,8 @@ RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
  rm -rf /etc/update-motd.d/10-help-text
 RUN echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
  echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /root/.bashrc;\
- echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /root/.profile
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /root/.profile;\
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /usr/local/hadoop-2.7.5/etc/hadoop/hadoop-env.sh
 
 
 #Environment vars setting
@@ -62,7 +64,7 @@ ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:HADOOP_PREFIX/bin
 
 #https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-ADD hadoop-etc.tar.gz /usr/local/hadoop/
+ADD hadoop-etc.tar.gz /
 
 #Standalone config setting
 ## RUN mkdir $HADOOP_PREFIX/input
@@ -76,5 +78,5 @@ ADD hadoop-etc.tar.gz /usr/local/hadoop/
 ## VOLUME [ "/sys/fs/cgroup" ]
 ## 
 EXPOSE 22
-CMD ["/sbin/init"]
+CMD ["/etc/bootstrap.sh"]
 #CMD ["/bin/bash"]
