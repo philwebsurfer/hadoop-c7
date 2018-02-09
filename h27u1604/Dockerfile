@@ -27,7 +27,8 @@ RUN apt-get update; \
  apt-get install -y --no-install-recommends apt-utils locales
 RUN apt-get install -y --no-install-recommends bash-completion \
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
- vim openjdk-8-jdk-headless net-tools python
+ vim openjdk-8-jdk-headless net-tools python telnet traceroute \
+ iputils-ping dnsutils
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
