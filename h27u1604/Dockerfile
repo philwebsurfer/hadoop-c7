@@ -19,7 +19,8 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 
 #Change mirrrors ad hoc, for speed
-RUN sed -i 's!\(archive\|security\)\.ubuntu\.com/!mirror.cogentco.com/pub/linux/!g' /etc/apt/sources.list.bak
+RUN sed -i 's!\(archive\|security\)\.ubuntu\.com/!mirror.cogentco.com/pub/linux/!g'\
+ /etc/apt/sources.list
 
 RUN apt-get update; \
  apt-get upgrade -y; \
