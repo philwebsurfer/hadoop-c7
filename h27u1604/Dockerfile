@@ -27,7 +27,7 @@ RUN apt-get update; \
  apt-get install -y --no-install-recommends apt-utils locales
 RUN apt-get install -y --no-install-recommends bash-completion \
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
- vim openjdk-8-jdk-headless
+ vim openjdk-8-jdk-headless net-tools python
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -81,6 +81,6 @@ ENV PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
 ## #Volume mappings for cgroup
 ## VOLUME [ "/sys/fs/cgroup" ]
 ## 
-EXPOSE 22
+EXPOSE 22/tcp 50090/tcp 50010/tcp 50075/tcp 50020/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 
 CMD ["/etc/bootstrap.sh"]
 #CMD ["/bin/bash"]
