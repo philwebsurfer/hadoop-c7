@@ -31,13 +31,13 @@ ENV LANG en_US.utf8
 RUN systemctl enable ssh
 
 #Do the Java things 
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jdk
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 #Hadoop things
-#https://www-us.apache.org/dist/hadoop/common/hadoop-2.7.5/hadoop-2.7.5.tar.gz
-ADD hadoop-2.7.5.tar.gz /usr/local
+#https://www-us.apache.org/dist/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz
+ADD hadoop-2.7.4.tar.gz /usr/local
 ADD hadoop-etc.tar.gz /
-RUN ln -sf /usr/local/hadoop-2.7.5 /usr/local/hadoop
+RUN ln -sf /usr/local/hadoop-2.7.4 /usr/local/hadoop
 
 #passwordless ssh (from
 #https://store.docker.com/community/images/sequenceiq/hadoop-docker/dockerfile)
@@ -49,9 +49,9 @@ RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
  cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys; \
  rm -rf /etc/update-motd.d/10-help-text
 RUN echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
- echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jdk >> /root/.bashrc;\
- echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jdk >> /root/.profile;\
- echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jdk >> /usr/local/hadoop-2.7.5/etc/hadoop/hadoop-env.sh
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 >> /root/.bashrc;\
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 >> /root/.profile;\
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 >> /usr/local/hadoop-2.7.4/etc/hadoop/hadoop-env.sh
 
 
 #Environment vars setting
