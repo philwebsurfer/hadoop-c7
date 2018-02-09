@@ -57,6 +57,7 @@ ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:HADOOP_PREFIX/bin
 
 #https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+ADD hadoop-etc.tar.gz /usr/local
 
 #Standalone config setting
 ## RUN mkdir $HADOOP_PREFIX/input
@@ -65,7 +66,6 @@ ENV PATH $PATH:HADOOP_PREFIX/bin
 ## #Pseudo-distributed
 ## #haddop-etc.tar.gz created with this
 ## # tar cfz hadoop-etc.tar.gz hadoop-3.0.0/etc/hadoop/{core-site.xml,hdfs-site.xml}
-## ADD hadoop-etc.tar.gz /usr/local
 ## 
 ## #Volume mappings for cgroup
 ## VOLUME [ "/sys/fs/cgroup" ]
