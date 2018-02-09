@@ -20,9 +20,9 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update; \
  apt-get upgrade -y; \
- apt-get install -y apt-utils locales
-RUN apt-get install -y bash-completion openjdk-8-jre-headless\
- screen openssh-server openssh-client rsync
+ apt-get install -y --no-install-recommends apt-utils locales
+RUN apt-get install -y --no-install-recommends bash-completion \
+ openjdk-8-jre-headless screen openssh-server openssh-client rsync
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -41,10 +41,15 @@ RUN ln -sf /usr/local/hadoop-2.7.5 /usr/local/hadoop
 #https://store.docker.com/community/images/sequenceiq/hadoop-docker/dockerfile)
 RUN rm -rf /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_rsa_key\
  /root/.ssh/id_rsa /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
-RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
-RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
-RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
-RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
+ ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key; \
+ ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa; \
+ cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys; \
+ rm -rf /etc/update-motd.d/10-help-text
+RUN echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /root/.bashrc;\
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /root/.profile
+
 
 #Environment vars setting
 ENV HADOOP_PREFIX /usr/local/hadoop
