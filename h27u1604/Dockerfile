@@ -31,7 +31,7 @@ ENV LANG en_US.utf8
 RUN systemctl enable ssh
 
 #Do the Java things 
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jre
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jdk
 
 #Hadoop things
 #https://www-us.apache.org/dist/hadoop/common/hadoop-2.7.5/hadoop-2.7.5.tar.gz
@@ -49,9 +49,9 @@ RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
  cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys; \
  rm -rf /etc/update-motd.d/10-help-text
 RUN echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
- echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /root/.bashrc;\
- echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /root/.profile;\
- echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre >> /usr/local/hadoop-2.7.5/etc/hadoop/hadoop-env.sh
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jdk >> /root/.bashrc;\
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jdk >> /root/.profile;\
+ echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jdk >> /usr/local/hadoop-2.7.5/etc/hadoop/hadoop-env.sh
 
 
 #Environment vars setting
