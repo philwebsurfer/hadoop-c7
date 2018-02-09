@@ -57,7 +57,7 @@ ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:HADOOP_PREFIX/bin
 
 #https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-ADD hadoop-etc.tar.gz /usr/local
+ADD hadoop-etc.tar.gz /usr/local/hadoop/
 
 #Standalone config setting
 ## RUN mkdir $HADOOP_PREFIX/input
