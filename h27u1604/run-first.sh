@@ -1,5 +1,6 @@
 #!/bin/bash 
-wget -c http://www-us.apache.org/dist/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz
+wget -c http://mirror.cogentco.com/pub/apache/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz
+#wget -c http://www-us.apache.org/dist/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz
 
 echo 'Execute this to build:'
 echo 'docker build --rm=true -v /sys/fs/cgroup:/sys/fs/cgroup -t local/xenial-hadoop-base .'
