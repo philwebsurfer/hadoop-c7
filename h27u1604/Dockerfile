@@ -23,7 +23,7 @@ RUN apt-get update; \
  apt-get install -y --no-install-recommends apt-utils locales
 RUN apt-get install -y --no-install-recommends bash-completion \
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
- vim
+ vim openjdk-8-jre-headless
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -36,6 +36,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jre
 #Hadoop things
 #https://www-us.apache.org/dist/hadoop/common/hadoop-2.7.5/hadoop-2.7.5.tar.gz
 ADD hadoop-2.7.5.tar.gz /usr/local
+ADD hadoop-etc.tar.gz /
 RUN ln -sf /usr/local/hadoop-2.7.5 /usr/local/hadoop
 
 #passwordless ssh (from
@@ -64,7 +65,6 @@ ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:HADOOP_PREFIX/bin
 
 #https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-ADD hadoop-etc.tar.gz /
 
 #Standalone config setting
 ## RUN mkdir $HADOOP_PREFIX/input
