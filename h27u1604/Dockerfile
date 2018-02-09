@@ -66,7 +66,7 @@ ENV HADOOP_MAPRED_HOME /usr/local/hadoop
 ENV HADOOP_YARN_HOME /usr/local/hadoop
 ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
 ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
-ENV PATH $PATH:HADOOP_PREFIX/bin
+ENV PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
 
 #https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
 
