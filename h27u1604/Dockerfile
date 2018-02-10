@@ -5,17 +5,6 @@ LABEL name="Ubuntu 16.04 - Hadoop 27" \
 
 USER root
 
-### #Centos 7 recommends removing the following...
-### RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
-### systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-### rm -f /lib/systemd/system/multi-user.target.wants/*;\
-### rm -f /etc/systemd/system/*.wants/*;\
-### rm -f /lib/systemd/system/local-fs.target.wants/*; \
-### rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-### rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-### rm -f /lib/systemd/system/basic.target.wants/*;\
-### rm -f /lib/systemd/system/anaconda.target.wants/*;
-
 ENV DEBIAN_FRONTEND noninteractive
 
 #Change mirrrors ad hoc, for speed
@@ -69,19 +58,9 @@ ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
 ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
 
-#https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+#Volume mappings for cgroup
+VOLUME [ "/sys/fs/cgroup" ]
 
-#Standalone config setting
-## RUN mkdir $HADOOP_PREFIX/input
-## RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
-## 
-## #Pseudo-distributed
-## #haddop-etc.tar.gz created with this
-## # tar cfz hadoop-etc.tar.gz hadoop-3.0.0/etc/hadoop/{core-site.xml,hdfs-site.xml}
-## 
-## #Volume mappings for cgroup
-## VOLUME [ "/sys/fs/cgroup" ]
-## 
 EXPOSE 22/tcp 50090/tcp 50010/tcp 50075/tcp 50020/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 
 CMD ["/etc/bootstrap.sh"]
 #CMD ["/bin/bash"]
