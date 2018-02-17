@@ -17,10 +17,11 @@ RUN apt-get update; \
 RUN apt-get install -y --no-install-recommends bash-completion \
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
  vim openjdk-8-jdk-headless net-tools python telnet traceroute \
- iputils-ping dnsutils python3 curl wget less
+ iputils-ping dnsutils python3 curl wget less tzdata
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
- localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 ; \
+ rm -rf /etc/localtime; link /usr/share/zoneinfo/America/Mexico_City /etc/localtime
 ENV LANG en_US.utf8
 RUN systemctl enable ssh
 
