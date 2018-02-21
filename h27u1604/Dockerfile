@@ -5,17 +5,6 @@ LABEL name="Ubuntu 16.04 - Hadoop 27" \
 
 USER root
 
-### #Centos 7 recommends removing the following...
-### RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
-### systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-### rm -f /lib/systemd/system/multi-user.target.wants/*;\
-### rm -f /etc/systemd/system/*.wants/*;\
-### rm -f /lib/systemd/system/local-fs.target.wants/*; \
-### rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-### rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-### rm -f /lib/systemd/system/basic.target.wants/*;\
-### rm -f /lib/systemd/system/anaconda.target.wants/*;
-
 ENV DEBIAN_FRONTEND noninteractive
 
 #Change mirrrors ad hoc, for speed
@@ -28,10 +17,11 @@ RUN apt-get update; \
 RUN apt-get install -y --no-install-recommends bash-completion \
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
  vim openjdk-8-jdk-headless net-tools python telnet traceroute \
- iputils-ping dnsutils python3 curl wget less
+ iputils-ping dnsutils python3 curl wget less tzdata
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
- localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 ; \
+ rm -rf /etc/localtime; link /usr/share/zoneinfo/America/Mexico_City /etc/localtime
 ENV LANG en_US.utf8
 RUN systemctl enable ssh
 
@@ -69,19 +59,9 @@ ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
 ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
 
-#https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+#Volume mappings for cgroup
+VOLUME [ "/sys/fs/cgroup" ]
 
-#Standalone config setting
-## RUN mkdir $HADOOP_PREFIX/input
-## RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
-## 
-## #Pseudo-distributed
-## #haddop-etc.tar.gz created with this
-## # tar cfz hadoop-etc.tar.gz hadoop-3.0.0/etc/hadoop/{core-site.xml,hdfs-site.xml}
-## 
-## #Volume mappings for cgroup
-## VOLUME [ "/sys/fs/cgroup" ]
-## 
 EXPOSE 22/tcp 50090/tcp 50010/tcp 50075/tcp 50020/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 
 CMD ["/etc/bootstrap.sh"]
 #CMD ["/bin/bash"]
