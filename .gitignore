@@ -1,8 +1,7 @@
 rpm
 *.rpm
 .rpm
-hadoop-2.7.5.tar.gz
 etc/
-hadoop-2.7.[0-9].tar.gz
+hadoop-2.[0-9].[0-9].tar.gz
 usr/
 
