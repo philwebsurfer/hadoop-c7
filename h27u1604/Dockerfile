@@ -60,6 +60,9 @@ ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
 ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
 
+#Remove bat files for Windows: disrupt the autocomplete :-@
+RUN find $HADOOP_PREFIX/ -iname '*.cmd' -exec rm -rf {} \;
+
 #Volume mappings for cgroup
 VOLUME [ "/sys/fs/cgroup" ]
 
