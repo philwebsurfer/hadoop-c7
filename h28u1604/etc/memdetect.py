@@ -35,7 +35,6 @@ for line in procinfo:
             re.sub("^.{1,5}:name=systemd:", "", line) + \
             "/memory.stat"
         if not re.match(".*/docker-", dockerd):
-            print("docker not found")
             continue
         #print(dockerd)
         memstat = open(dockerd, 'r')
@@ -55,9 +54,9 @@ for line in procinfo:
                     "", memline)
                 rss = math.floor(int(memline) / 2**20)
         free = (total - rss)
+        print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
         memstat.close()
 procinfo.close()
-print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
 #print("Total available memory to the container: %d kB"%total)
 
 proposed = math.floor(free*0.8)
