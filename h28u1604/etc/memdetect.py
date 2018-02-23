@@ -53,7 +53,7 @@ for line in procinfo:
                 memline = re.sub("[^0-9]*", \
                     "", memline)
                 rss = math.floor(int(memline) / 2**10)
-        #free = (total - rss)
+        free = (total - rss)
         memstat.close()
 procinfo.close()
 #print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
