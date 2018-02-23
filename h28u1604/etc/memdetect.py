@@ -23,7 +23,7 @@ for line in meminfo:
         cache = int(line)
 meminfo.close()
 free = (free + buffer + cache)/(2**10)
-#print("Free: %d, Buffers: %d, Cache: %d, Total: %d"%(free, buffer, cache, total))
+print("Free: %d, Buffers: %d, Cache: %d, Total: %d"%(free, buffer, cache, total))
 #print("Total memory: %d kB"%total)
 
 rss = None
@@ -34,7 +34,8 @@ for line in procinfo:
         dockerd = "/sys/fs/cgroup/memory" + \
             re.sub("^.{1,5}:name=systemd:", "", line) + \
             "/memory.stat"
-        if not re.match("/docker-", dockerd):
+        if not re.match(".*/docker-", dockerd):
+            print("docker not found")
             continue
         #print(dockerd)
         memstat = open(dockerd, 'r')
@@ -44,19 +45,19 @@ for line in procinfo:
             if re.match("hierarchical_memory_limit", memline):
                 memline = re.sub("[^0-9]*", \
                     "", memline)
-                total = math.floor(int(memline) / 2**10)
+                total = math.floor(int(memline) / 2**20)
             #elif re.match("total_rss_huge", memline):
             #    memline = re.sub("[^0-9]*", \
             #        "", memline)
-            #    rss_huge = math.floor(int(memline) / 2**10)
+            #    rss_huge = math.floor(int(memline) / 2**20)
             elif re.match("total_rss", memline):
                 memline = re.sub("[^0-9]*", \
                     "", memline)
-                rss = math.floor(int(memline) / 2**10)
+                rss = math.floor(int(memline) / 2**20)
         free = (total - rss)
         memstat.close()
 procinfo.close()
-#print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
+print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
 #print("Total available memory to the container: %d kB"%total)
 
 proposed = math.floor(free*0.8)
