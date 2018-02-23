@@ -23,7 +23,7 @@ for line in meminfo:
         cache = int(line)
 meminfo.close()
 #free = (free + buffer + cache)/(2**10)
-print("Free: %d, Buffers: %d, Cache: %d, Total: %d"%(free, buffer, cache, total))
+#print("Free: %d, Buffers: %d, Cache: %d, Total: %d"%(free, buffer, cache, total))
 #print("Total memory: %d kB"%total)
 
 rss = None
