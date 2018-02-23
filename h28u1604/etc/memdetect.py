@@ -12,15 +12,19 @@ for line in meminfo:
     if "MemFree:" in line:
         line = re.sub("[^0-9]*", "", line)
         free = int(line)
+        free = math.floor(free / 2**10)
     if "MemTotal:" in line:
         line = re.sub("[^0-9]*", "", line)
         total = int(line)
+        total = math.floor(total / 2**10)
     elif "Buffers:" in line:
         line = re.sub("[^0-9]*", "", line)
         buffer = int(line)
+        buffer = math.floor(buffer / 2**10)
     elif re.match("^Cached:", line):
         line = re.sub("[^0-9]*", "", line)
         cache = int(line)
+        cache = math.floor(cache / 2**10)
 meminfo.close()
 #free = (free + buffer + cache)/(2**10)
 #print("Free: %d, Buffers: %d, Cache: %d, Total: %d"%(free, buffer, cache, total))
