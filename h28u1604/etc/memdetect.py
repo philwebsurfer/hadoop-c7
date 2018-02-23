@@ -22,7 +22,7 @@ for line in meminfo:
         line = re.sub("[^0-9]*", "", line)
         cache = int(line)
 meminfo.close()
-free = (free + buffer + cache)/(2**10)
+#free = (free + buffer + cache)/(2**10)
 print("Free: %d, Buffers: %d, Cache: %d, Total: %d"%(free, buffer, cache, total))
 #print("Total memory: %d kB"%total)
 
@@ -54,7 +54,7 @@ for line in procinfo:
                     "", memline)
                 rss = math.floor(int(memline) / 2**20)
         free = (total - rss)
-        print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
+        #print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
         memstat.close()
 procinfo.close()
 #print("Total available memory to the container: %d kB"%total)
