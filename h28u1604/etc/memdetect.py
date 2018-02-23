@@ -34,6 +34,8 @@ for line in procinfo:
         dockerd = "/sys/fs/cgroup/memory" + \
             re.sub("^.{1,5}:name=systemd:", "", line) + \
             "/memory.stat"
+        if not re.match("/docker-", dockerd):
+            continue
         #print(dockerd)
         memstat = open(dockerd, 'r')
         for memline in memstat:
@@ -51,9 +53,9 @@ for line in procinfo:
                 memline = re.sub("[^0-9]*", \
                     "", memline)
                 rss = math.floor(int(memline) / 2**10)
+        #free = (total - rss)
         memstat.close()
 procinfo.close()
-free = (total - rss)
 #print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
 #print("Total available memory to the container: %d kB"%total)
 
