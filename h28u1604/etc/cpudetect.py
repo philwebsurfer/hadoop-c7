@@ -27,7 +27,7 @@ for line in procinfo:
 
         if not re.match(".*/docker-", dockerd):
             continue
-        print(dockerd)
+        # print(dockerd)
         cpu_quota = open(dockerd + "/cpu.cfs_quota_us", 'r')
         for cpu_q in cpu_quota:
             cpu_q = cpu_q.strip()
@@ -41,7 +41,7 @@ for line in procinfo:
                     cpu_p = int(cpu_p)
                 cpu_period.close()
                 cpus = cpu_q / cpu_p
-            #print("cpus %d"% cpus)
+            # print("cpus %d"% cpus)
         cpu_quota.close()
 procinfo.close()
 
