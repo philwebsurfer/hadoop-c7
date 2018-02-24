@@ -32,8 +32,24 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 #Hadoop things
 #https://www-us.apache.org/dist/hadoop/common/hadoop-2.8.3/hadoop-2.8.3.tar.gz
 ADD hadoop-2.8.3.tar.gz /usr/local
-ADD etc/* /etc
-ADD usr/local/hadoop/etc/* /usr/local/hadoop-2.8.3/etc/hadoop
+#for file in $(ls etc/*); do echo COPY $file /etc; done
+COPY etc/bootstrap.sh /etc
+COPY etc/cpudetecthalf.py /etc
+COPY etc/cpudetect.py /etc
+COPY etc/hosts.cluster /etc
+COPY etc/memdetect.py /etc
+#for file in $(ls usr/local/hadoop/etc/*); do echo COPY usr/local/hadoop/etc/$file /usr/local/hadoop/etc/hadoop; done
+COPY usr/local/hadoop/etc/hadoop/core-site.xml.cluster /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/core-site.xml.singlenode /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/hdfs-site.xml.cluster /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/hdfs-site.xml.singlenode /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/mapred-site.xml.cluster /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/mapred-site.xml.singlenode /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/slaves.cluster /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/slaves.singlenode /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/yarn-site.xml.cluster /usr/local/hadoop/etc
+COPY usr/local/hadoop/etc/hadoop/yarn-site.xml.singlenode /usr/local/hadoop/etc
+
 RUN ln -sf /usr/local/hadoop-2.8.3 /usr/local/hadoop
 
 #passwordless ssh (from
