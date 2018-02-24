@@ -34,7 +34,7 @@
   </property>
   <property>
         <name>yarn.scheduler.maximum-allocation-mb</name>
-        <value>16384</value>
+        <value>MEMORY</value>
   </property>
   <property>
         <name>yarn.scheduler.minimum-allocation-vcores</name>
@@ -42,7 +42,7 @@
   </property>
   <property>
         <name>yarn.scheduler.maximum-allocation-vcores</name>
-        <value>4</value>
+        <value>CPUHALF</value>
   </property>
   <property>
         <name>yarn.nodemanager.minimum-allocation-mb</name>
@@ -50,15 +50,15 @@
   </property>
   <property><!-- this is the good one!!! -->
         <name>yarn.nodemanager.resource.memory-mb</name>
-        <value>16384</value>
+        <value>MEMORY</value>
   </property>
   <property><!-- this is the good one!!! -->
         <name>yarn.nodemanager.resource.cpu-vcores</name>
-        <value>8</value>
+        <value>CPU</value>
   </property>
   <property>
         <name>yarn.nodemanager.maximum-allocation-mb</name>
-        <value>16384</value>
+        <value>MEMORY</value>
   </property>
   <property>
         <name>yarn.nodemanager.minimum-allocation-vcores</name>
@@ -66,7 +66,7 @@
   </property>
   <property>
         <name>yarn.nodemanager.maximum-allocation-vcores</name>
-        <value>8</value>
+        <value>CPU</value>
   </property>
   <property>
         <name>yarn.nodemanager.pmem-check-enabled</name>
