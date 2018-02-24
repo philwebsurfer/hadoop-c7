@@ -38,17 +38,17 @@ COPY etc/cpudetecthalf.py /etc
 COPY etc/cpudetect.py /etc
 COPY etc/hosts.cluster /etc
 COPY etc/memdetect.py /etc
-#for file in $(ls usr/local/hadoop/etc/*); do echo COPY usr/local/hadoop/etc/$file /usr/local/hadoop/etc/hadoop; done
-COPY usr/local/hadoop/etc/hadoop/core-site.xml.cluster /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/core-site.xml.singlenode /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/hdfs-site.xml.cluster /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/hdfs-site.xml.singlenode /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/mapred-site.xml.cluster /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/mapred-site.xml.singlenode /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/slaves.cluster /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/slaves.singlenode /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/yarn-site.xml.cluster /usr/local/hadoop/etc
-COPY usr/local/hadoop/etc/hadoop/yarn-site.xml.singlenode /usr/local/hadoop/etc
+#for file in $(ls usr/local/hadoop/etc/*); do echo COPY usr/local/hadoop/etc/$file /usr/local/hadoop/etc/hadoop-2.8.3; done
+COPY usr/local/hadoop/etc/hadoop/core-site.xml.cluster /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/core-site.xml.singlenode /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/hdfs-site.xml.cluster /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/hdfs-site.xml.singlenode /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/mapred-site.xml.cluster /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/mapred-site.xml.singlenode /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/slaves.cluster /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/slaves.singlenode /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/yarn-site.xml.cluster /usr/local/hadoop2.8.3/etc
+COPY usr/local/hadoop/etc/hadoop/yarn-site.xml.singlenode /usr/local/hadoop2.8.3/etc
 
 RUN ln -sf /usr/local/hadoop-2.8.3 /usr/local/hadoop
 
