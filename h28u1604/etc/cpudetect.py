@@ -23,21 +23,30 @@ for line in procinfo:
     line = line.strip()
     if re.match('.{1,5}:name=systemd:', line):
         dockerd = "/sys/fs/cgroup/cpu,cpuacct" + \
-            re.sub("^.{1,5}:name=systemd:", "", line) + \
-            "/cpu.cfs_quota_us"
+            re.sub("^.{1,5}:name=systemd:", "", line)
+
         if not re.match(".*/docker-", dockerd):
             continue
-        # print(dockerd)
-        cpu_quota = open(dockerd, 'r')
+        print(dockerd)
+        cpu_quota = open(dockerd + "/cpu.cfs_quota_us", 'r')
         for cpu_q in cpu_quota:
             cpu_q = cpu_q.strip()
-            cpus = math.floor(int(cpu_q) / 100000)
-        #print("Free: %d, RSS: %d, Total: %d"%(free, rss, total))
+            cpu_q = int(cpu_q)
+            if cpu_q < 0:
+                continue
+            else:
+                cpu_period = open(dockerd + "/cpu.cfs_period_us", 'r')
+                for cpu_p in cpu_period:
+                    cpu_p = cpu_p.strip()
+                    cpu_p = int(cpu_p)
+                cpu_period.close()
+                cpus = cpu_q / cpu_p
+            print("cpus %d"% cpus)
         cpu_quota.close()
 procinfo.close()
 
 cpus -= 1
-if cpus < 1:  
+if cpus < 1:
     cpus = 1
 # print("Total cpus avail to the container: %d"%cpus)
 print("%d"%(cpus))
