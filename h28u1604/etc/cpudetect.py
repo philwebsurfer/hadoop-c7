@@ -41,7 +41,7 @@ for line in procinfo:
                     cpu_p = int(cpu_p)
                 cpu_period.close()
                 cpus = cpu_q / cpu_p
-            print("cpus %d"% cpus)
+            #print("cpus %d"% cpus)
         cpu_quota.close()
 procinfo.close()
 
