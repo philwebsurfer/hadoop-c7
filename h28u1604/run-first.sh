@@ -1,5 +1,5 @@
 #!/bin/bash 
-tar cfz hadoop-etc.tar.gz etc
+tar cfz hadoop-etc.tar.gz hadoop
 cd ..
 
 
