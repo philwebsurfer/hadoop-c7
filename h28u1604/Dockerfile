@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM philwebsurfer/xenial-hadoop-vanilla
 LABEL name="Ubuntu 16.04 - Hadoop 2.8" \
     vendor="philwebsurfer" \
     license="GPLv2" 
@@ -8,7 +8,7 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 
 #Hadoop things
-ADD hadoop-etc.tar.gz /usr/local/hadoop-2.8.3/etc/hadoop
+ADD hadoop-etc.tar.gz /usr/local/hadoop-2.8.3/etc/
 
 #Volume mappings for cgroup
 VOLUME [ "/sys/fs/cgroup" ]
@@ -40,5 +40,5 @@ EXPOSE 8033/tcp
 EXPOSE 8088/tcp
 #history server
 EXPOSE 8188/tcp
-ENTRYPOINT ["/etc/bootstrap.sh", "singlenode"]
+CMD ["/etc/bootstrap.sh", "singlenode"]
 #CMD ["/bin/bash"]
