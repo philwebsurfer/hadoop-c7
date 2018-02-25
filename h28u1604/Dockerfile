@@ -1,4 +1,4 @@
-FROM philwebsurfer/xenial-hadoop-vanilla
+FROM philwebsurfer/xenial-hadoop-vanilla:latest
 LABEL name="Ubuntu 16.04 - Hadoop 2.8" \
     vendor="philwebsurfer" \
     license="GPLv2" 
@@ -11,13 +11,13 @@ ENV DEBIAN_FRONTEND noninteractive
 ADD hadoop-etc.tar.gz /usr/local/hadoop-2.8.3/etc/
 
 #SSH things 
-RUN rm -rf /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_rsa_key\
- /root/.ssh/id_rsa /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
-RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
- ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key; \
- ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa; \
- cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys; \
- rm -rf /etc/update-motd.d/10-help-text
+#RUN rm -rf /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_rsa_key\
+# /root/.ssh/id_rsa /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+#RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
+# ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key; \
+# ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa; \
+# cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys; \
+# rm -rf /etc/update-motd.d/10-help-text
 
 
 #Volume mappings for cgroup
@@ -51,5 +51,5 @@ EXPOSE 22/tcp 50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8
 #EXPOSE 8088/tcp
 ##history server
 #EXPOSE 8188/tcp
+ENTRYPOINT "/sbin/init"
 CMD ["/etc/bootstrap.sh", "singlenode"]
-#CMD ["/bin/bash"]
