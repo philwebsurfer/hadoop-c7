@@ -92,5 +92,5 @@ EXPOSE 8033/tcp
 EXPOSE 8088/tcp
 #history server
 EXPOSE 8188/tcp
-ENTRYPOINT ["/bin/bash"]
+CMD ["/bin/bash"]
 #CMD ["/bin/bash"]
