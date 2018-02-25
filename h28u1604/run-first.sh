@@ -1,7 +1,6 @@
 #!/bin/bash 
 tar cfz hadoop-etc.tar.gz hadoop
-cd ..
-
+tar cfz etc.tar.gz etc
 
 echo 'Executing this to build:'
 echo 'docker build --rm=true --force-rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro -t docker.io/philwebsurfer/xenial-hadoop-base:2.8.3 .'
