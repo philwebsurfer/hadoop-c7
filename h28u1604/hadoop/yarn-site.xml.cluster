@@ -54,7 +54,7 @@
   </property>
   <property><!-- this is the good one!!! -->
         <name>yarn.nodemanager.resource.cpu-vcores</name>
-        <value>CPU</value>
+        <value>CPUS</value>
   </property>
   <property>
         <name>yarn.nodemanager.maximum-allocation-mb</name>
@@ -66,7 +66,7 @@
   </property>
   <property>
         <name>yarn.nodemanager.maximum-allocation-vcores</name>
-        <value>CPU</value>
+        <value>CPUS</value>
   </property>
   <property>
         <name>yarn.nodemanager.pmem-check-enabled</name>
