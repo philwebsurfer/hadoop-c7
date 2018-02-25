@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 #Hadoop things
 ADD hadoop-etc.tar.gz /usr/local/hadoop-2.8.3/etc/
+ADD etc.tar.gz /
 
 #SSH things 
 #RUN rm -rf /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_rsa_key\
@@ -51,5 +52,4 @@ EXPOSE 22/tcp 50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8
 #EXPOSE 8088/tcp
 ##history server
 #EXPOSE 8188/tcp
-ENTRYPOINT "/sbin/init"
 CMD ["/etc/bootstrap.sh", "singlenode"]
