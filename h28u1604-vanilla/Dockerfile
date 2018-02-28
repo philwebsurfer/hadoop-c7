@@ -30,9 +30,24 @@ RUN systemctl enable ssh
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 #Hadoop things
-#https://www-us.apache.org/dist/hadoop/common/hadoop-2.8.3/hadoop-2.8.3.tar.gz
+#https://www-us.apache.org/dist/hadoop/common/
 ADD hadoop-2.8.3.tar.gz /usr/local
+ADD apache-hive-2.3.2-bin.tar.gz /usr/local
+ADD pig-0.17.0.tar.gz /usr/local
+ADD sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz /usr/local
+ADD accumulo-1.8.1-bin.tar.gz /usr/local
+ADD zookeeper-3.4.11.tar.gz /usr/local
+ADD hbase-1.2.6-bin.tar.gz /usr/local
+### accumulo native
+COPY libaccumulo.so /usr/local/accumulo-1.8.1/lib/native/libaccumulo.so
 RUN ln -sf /usr/local/hadoop-2.8.3 /usr/local/hadoop
+RUN ln -sf /usr/local/apache-hive-2.3.2-bin /usr/local/hive
+RUN ln -sf /usr/local/pig-0.17.0 /usr/local/pig
+RUN ln -sf /usr/local/sqoop-1.4.7.bin__hadoop-2.6.0 /usr/local/sqoop
+##########################
+RUN ln -sf /usr/local/accumulo-1.8.1 /usr/local/accumulo
+RUN ln -sf /usr/local/zookeeper-3.4.11 /usr/local/zookeeper
+RUN ln -sf /usr/local/hbase-1.2.6 /usr/local/hbase
 
 #passwordless ssh (from
 #https://store.docker.com/community/images/sequenceiq/hadoop-docker/dockerfile)
@@ -58,9 +73,16 @@ ENV HADOOP_YARN_HOME /usr/local/hadoop
 ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
 ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
+ENV HIVE_HOME /usr/local/hive
+ENV HCAT_HOME $HIVE_HOME/hcatalog
+ENV PIG_HOME /usr/local/pig
+ENV SQOOP_HOME /usr/local/sqoop
+ENV ACCUMULO_HOME /usr/local/accumulo
+ENV ZOOKEEPER_HOME /usr/local/zookeper
+ENV HBASE_HOME /usr/local/hbase
 
 #Remove bat files for Windows: disrupt the autocomplete :-@
-RUN find $HADOOP_PREFIX/ -iname '*.cmd' -exec rm -rf {} \;
+RUN find {$HADOOP_PREFIX,$PIG_HOME,$SQOOP_HOME,$ZOOKEEPER_HOME}/{bin,sbin} -iname '*.cmd' -exec rm -rf {} \;
 
 #Volume mappings for cgroup
 VOLUME [ "/sys/fs/cgroup" ]
