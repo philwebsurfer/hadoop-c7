@@ -9,25 +9,21 @@ ENV DEBIAN_FRONTEND noninteractive
 
 #Change mirrrors ad hoc, for speed
 RUN sed -i 's!\(archive\|security\)\.ubuntu\.com/!mirror.cogentco.com/pub/linux/!g'\
- /etc/apt/sources.list
-
-RUN apt-get update; \
+ /etc/apt/sources.list; \
+ apt-get update; \
  apt-get upgrade -y; \
- apt-get install -y --no-install-recommends apt-utils locales
-RUN apt-get install -y --no-install-recommends bash-completion \
+ apt-get install -y --no-install-recommends apt-utils locales; \
+ apt-get install -y --no-install-recommends bash-completion \
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
  vim openjdk-8-jdk-headless net-tools python telnet traceroute \
  iputils-ping dnsutils python3 curl wget less tzdata apt-file \
  bash-completion libssl-dev libsnappy-dev xzip
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
- localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 ; \
- rm -rf /etc/localtime; link /usr/share/zoneinfo/America/Mexico_City /etc/localtime
-ENV LANG en_US.utf8
-RUN systemctl enable ssh
-
-#Do the Java things 
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8; \
+ rm -rf /etc/localtime; link /usr/share/zoneinfo/America/Mexico_City /etc/localtime; \
+ systemctl enable ssh
+ENV LANG=en_US.utf8 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 #Hadoop things
 #https://www-us.apache.org/dist/hadoop/common/
@@ -65,21 +61,28 @@ RUN echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
 
 
 #Environment vars setting
-ENV HADOOP_PREFIX /usr/local/hadoop \
- HADOOP_COMMON_HOME /usr/local/hadoop \
- HADOOP_HDFS_HOME /usr/local/hadoop \
- HADOOP_MAPRED_HOME /usr/local/hadoop \
- HADOOP_YARN_HOME /usr/local/hadoop \
- HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop \
- YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop \
- PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin \
- HIVE_HOME /usr/local/hive \
- HCAT_HOME $HIVE_HOME/hcatalog \
- PIG_HOME /usr/local/pig \
- SQOOP_HOME /usr/local/sqoop \
- ACCUMULO_HOME /usr/local/accumulo \
- ZOOKEEPER_HOME /usr/local/zookeper \
- HBASE_HOME /usr/local/hbase \
+ENV HADOOP_PREFIX=/usr/local/hadoop \
+ HADOOP_COMMON_HOME=/usr/local/hadoop \
+ HADOOP_HDFS_HOME=/usr/local/hadoop \
+ HADOOP_MAPRED_HOME=/usr/local/hadoop \
+ HADOOP_YARN_HOME=/usr/local/hadoop \
+ HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop \
+ YARN_CONF_DIR=$HADOOP_PREFIX/etc/hadoop \
+ HIVE_HOME=/usr/local/hive \
+ HCAT_HOME=$HIVE_HOME/hcatalog \
+ PIG_HOME=/usr/local/pig \
+ SQOOP_HOME=/usr/local/sqoop \
+ ACCUMULO_HOME=/usr/local/accumulo \
+ ZOOKEEPER_HOME=/usr/local/zookeper \
+ HBASE_HOME=/usr/local/hbase \
+ PATH=$PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin \
+ PATH=$PATH:$PIG_HOME/sbin:$PIG_HOME/bin \
+ PATH=$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin \
+ PATH=$PATH:$HCAT_HOME/sbin:$HCAT_HOME/bin \
+ PATH=$PATH:$SQOOP_HOME/sbin:$SQOOP_HOME/bin \
+ PATH=$PATH:$ACCUMULO_HOME/sbin:$ACCUMULO_HOME/bin \
+ PATH=$PATH:$ZOOKEEPER_HOME/sbin:$ZOOKEEPER_HOME/bin \
+ PATH=$PATH:$HBASE_HOME/sbin:$HBASE_HOME/bin 
 
 #Remove bat files for Windows: disrupt the autocomplete :-@
 RUN find {$HADOOP_PREFIX,$PIG_HOME,$SQOOP_HOME,$ZOOKEEPER_HOME}/{bin,sbin} -iname '*.cmd' -exec rm -rf {} \;
@@ -89,30 +92,30 @@ VOLUME [ "/sys/fs/cgroup" ]
 VOLUME [ "/dfs" ]
 
 #ssh
-EXPOSE 22/tcp 
+EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 8188/tcp
 #sec name node
-EXPOSE 50090/tcp 
-#datanode dfsclient
-EXPOSE 50010/tcp 
-#datanode ipc
-EXPOSE 50020/tcp
-#MR job tracker
-EXPOSE 50030
-#namenode http
-EXPOSE 50070/tcp
-#datanode http
-EXPOSE 50075/tcp
-#yarn resman sched
-EXPOSE 8030/tcp
-#yarn resman tracker
-EXPOSE 8031/tcp
-#yarn resman
-EXPOSE 8032/tcp
-#yarn resman admin
-EXPOSE 8033/tcp
-#yarn resman webapp
-EXPOSE 8088/tcp
-#history server
-EXPOSE 8188/tcp
+#EXPOSE 50090/tcp 
+##datanode dfsclient
+#EXPOSE 50010/tcp 
+##datanode ipc
+#EXPOSE 50020/tcp
+##MR job tracker
+#EXPOSE 50030
+##namenode http
+#EXPOSE 50070/tcp
+##datanode http
+#EXPOSE 50075/tcp
+##yarn resman sched
+#EXPOSE 8030/tcp
+##yarn resman tracker
+#EXPOSE 8031/tcp
+##yarn resman
+#EXPOSE 8032/tcp
+##yarn resman admin
+#EXPOSE 8033/tcp
+##yarn resman webapp
+#EXPOSE 8088/tcp
+##history server
+#EXPOSE 8188/tcp
 CMD ["/bin/bash"]
 #CMD ["/bin/bash"]
