@@ -65,21 +65,21 @@ RUN echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
 
 
 #Environment vars setting
-ENV HADOOP_PREFIX /usr/local/hadoop
-ENV HADOOP_COMMON_HOME /usr/local/hadoop
-ENV HADOOP_HDFS_HOME /usr/local/hadoop
-ENV HADOOP_MAPRED_HOME /usr/local/hadoop
-ENV HADOOP_YARN_HOME /usr/local/hadoop
-ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
-ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
-ENV PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin
-ENV HIVE_HOME /usr/local/hive
-ENV HCAT_HOME $HIVE_HOME/hcatalog
-ENV PIG_HOME /usr/local/pig
-ENV SQOOP_HOME /usr/local/sqoop
-ENV ACCUMULO_HOME /usr/local/accumulo
-ENV ZOOKEEPER_HOME /usr/local/zookeper
-ENV HBASE_HOME /usr/local/hbase
+ENV HADOOP_PREFIX /usr/local/hadoop \
+ HADOOP_COMMON_HOME /usr/local/hadoop \
+ HADOOP_HDFS_HOME /usr/local/hadoop \
+ HADOOP_MAPRED_HOME /usr/local/hadoop \
+ HADOOP_YARN_HOME /usr/local/hadoop \
+ HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop \
+ YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop \
+ PATH $PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin \
+ HIVE_HOME /usr/local/hive \
+ HCAT_HOME $HIVE_HOME/hcatalog \
+ PIG_HOME /usr/local/pig \
+ SQOOP_HOME /usr/local/sqoop \
+ ACCUMULO_HOME /usr/local/accumulo \
+ ZOOKEEPER_HOME /usr/local/zookeper \
+ HBASE_HOME /usr/local/hbase \
 
 #Remove bat files for Windows: disrupt the autocomplete :-@
 RUN find {$HADOOP_PREFIX,$PIG_HOME,$SQOOP_HOME,$ZOOKEEPER_HOME}/{bin,sbin} -iname '*.cmd' -exec rm -rf {} \;
