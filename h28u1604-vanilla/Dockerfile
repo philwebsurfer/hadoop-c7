@@ -21,7 +21,7 @@ RUN sed -i 's!\(archive\|security\)\.ubuntu\.com/!mirror.cogentco.com/pub/linux/
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8; \
- rm -rf /etc/localtime; link /usr/share/zoneinfo/America/Mexico_City /etc/localtime; \
+ rm -rf /etc/localtime; ln -sf /usr/share/zoneinfo/America/Mexico_City /etc/localtime; \
  systemctl enable ssh
 ENV LANG=en_US.utf8 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
@@ -76,13 +76,13 @@ ENV HADOOP_PREFIX=/usr/local/hadoop \
 ENV YARN_CONF_DIR=$HADOOP_PREFIX/etc/hadoop \
  HCAT_HOME=$HIVE_HOME/hcatalog \
  PATH=$PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin:\
-$PATH:$PIG_HOME/sbin:$PIG_HOME/bin:\
-$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin:\
-$PATH:$HCAT_HOME/sbin:$HCAT_HOME/bin:\
-$PATH:$SQOOP_HOME/sbin:$SQOOP_HOME/bin:\
-$PATH:$ACCUMULO_HOME/sbin:$ACCUMULO_HOME/bin:\
-$PATH:$ZOOKEEPER_HOME/sbin:$ZOOKEEPER_HOME/bin:\
-$PATH:$HBASE_HOME/sbin:$HBASE_HOME/bin 
+$PIG_HOME/sbin:$PIG_HOME/bin:\
+$HIVE_HOME/sbin:$HIVE_HOME/bin:\
+$HCAT_HOME/sbin:$HCAT_HOME/bin:\
+$SQOOP_HOME/sbin:$SQOOP_HOME/bin:\
+$ACCUMULO_HOME/sbin:$ACCUMULO_HOME/bin:\
+$ZOOKEEPER_HOME/sbin:$ZOOKEEPER_HOME/bin:\
+$HBASE_HOME/sbin:$HBASE_HOME/bin 
 
 #Remove bat files for Windows: disrupt the autocomplete :-@
 RUN find $HADOOP_PREFIX/ $PIG_HOME/  \
