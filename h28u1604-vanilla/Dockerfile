@@ -27,38 +27,38 @@ ENV LANG=en_US.utf8 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 #Hadoop things
 #https://www-us.apache.org/dist/hadoop/common/
-ADD hadoop-2.8.3.tar.gz /usr/local
-ADD apache-hive-2.3.2-bin.tar.gz /usr/local
-ADD pig-0.17.0.tar.gz /usr/local
-ADD sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz /usr/local
-ADD accumulo-1.8.1-bin.tar.gz /usr/local
-ADD zookeeper-3.4.11.tar.gz /usr/local
-ADD hbase-1.2.6-bin.tar.gz /usr/local
+ADD hadoop-2.8.3.tar.gz \
+ apache-hive-2.3.2-bin.tar.gz \
+ pig-0.17.0.tar.gz \
+ sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz \
+ accumulo-1.8.1-bin.tar.gz \
+ zookeeper-3.4.11.tar.gz \
+ hbase-1.2.6-bin.tar.gz \ 
+ /usr/local/
 ### accumulo native
 COPY libaccumulo.so /usr/local/accumulo-1.8.1/lib/native/libaccumulo.so
-RUN ln -sf /usr/local/hadoop-2.8.3 /usr/local/hadoop
-RUN ln -sf /usr/local/apache-hive-2.3.2-bin /usr/local/hive
-RUN ln -sf /usr/local/pig-0.17.0 /usr/local/pig
-RUN ln -sf /usr/local/sqoop-1.4.7.bin__hadoop-2.6.0 /usr/local/sqoop
+RUN ln -sf /usr/local/hadoop-2.8.3 /usr/local/hadoop; \
+ ln -sf /usr/local/apache-hive-2.3.2-bin /usr/local/hive; \
+ ln -sf /usr/local/pig-0.17.0 /usr/local/pig; \
+ ln -sf /usr/local/sqoop-1.4.7.bin__hadoop-2.6.0 /usr/local/sqoop; \
 ##########################
-RUN ln -sf /usr/local/accumulo-1.8.1 /usr/local/accumulo
-RUN ln -sf /usr/local/zookeeper-3.4.11 /usr/local/zookeeper
-RUN ln -sf /usr/local/hbase-1.2.6 /usr/local/hbase
+ ln -sf /usr/local/accumulo-1.8.1 /usr/local/accumulo; \
+ ln -sf /usr/local/zookeeper-3.4.11 /usr/local/zookeeper; \
+ ln -sf /usr/local/hbase-1.2.6 /usr/local/hbase
 
 #passwordless ssh (from
 #https://store.docker.com/community/images/sequenceiq/hadoop-docker/dockerfile)
-RUN rm -rf /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_rsa_key\
- /root/.ssh/id_rsa /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
-RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
+RUN rm -rf /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_rsa_key \
+ /root/.ssh/id_rsa /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys; \
+ ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key; \
  ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key; \
  ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa; \
  cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys; \
- rm -rf /etc/update-motd.d/10-help-text
-RUN echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
+ rm -rf /etc/update-motd.d/10-help-text; \
+ echo StrictHostKeyChecking=no >> /etc/ssh/ssh_config; \
  echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 >> /root/.bashrc;\
  echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 >> /root/.profile;\
  echo export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 >> /usr/local/hadoop-2.8.3/etc/hadoop/hadoop-env.sh
-
 
 #Environment vars setting
 ENV HADOOP_PREFIX=/usr/local/hadoop \
@@ -67,25 +67,27 @@ ENV HADOOP_PREFIX=/usr/local/hadoop \
  HADOOP_MAPRED_HOME=/usr/local/hadoop \
  HADOOP_YARN_HOME=/usr/local/hadoop \
  HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop \
- YARN_CONF_DIR=$HADOOP_PREFIX/etc/hadoop \
  HIVE_HOME=/usr/local/hive \
- HCAT_HOME=$HIVE_HOME/hcatalog \
  PIG_HOME=/usr/local/pig \
  SQOOP_HOME=/usr/local/sqoop \
  ACCUMULO_HOME=/usr/local/accumulo \
- ZOOKEEPER_HOME=/usr/local/zookeper \
- HBASE_HOME=/usr/local/hbase \
- PATH=$PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin \
- PATH=$PATH:$PIG_HOME/sbin:$PIG_HOME/bin \
- PATH=$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin \
- PATH=$PATH:$HCAT_HOME/sbin:$HCAT_HOME/bin \
- PATH=$PATH:$SQOOP_HOME/sbin:$SQOOP_HOME/bin \
- PATH=$PATH:$ACCUMULO_HOME/sbin:$ACCUMULO_HOME/bin \
- PATH=$PATH:$ZOOKEEPER_HOME/sbin:$ZOOKEEPER_HOME/bin \
- PATH=$PATH:$HBASE_HOME/sbin:$HBASE_HOME/bin 
+ ZOOKEEPER_HOME=/usr/local/zookeeper \
+ HBASE_HOME=/usr/local/hbase 
+ENV YARN_CONF_DIR=$HADOOP_PREFIX/etc/hadoop \
+ HCAT_HOME=$HIVE_HOME/hcatalog \
+ PATH=$PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin:\
+$PATH:$PIG_HOME/sbin:$PIG_HOME/bin:\
+$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin:\
+$PATH:$HCAT_HOME/sbin:$HCAT_HOME/bin:\
+$PATH:$SQOOP_HOME/sbin:$SQOOP_HOME/bin:\
+$PATH:$ACCUMULO_HOME/sbin:$ACCUMULO_HOME/bin:\
+$PATH:$ZOOKEEPER_HOME/sbin:$ZOOKEEPER_HOME/bin:\
+$PATH:$HBASE_HOME/sbin:$HBASE_HOME/bin 
 
 #Remove bat files for Windows: disrupt the autocomplete :-@
-RUN find {$HADOOP_PREFIX,$PIG_HOME,$SQOOP_HOME,$ZOOKEEPER_HOME}/{bin,sbin} -iname '*.cmd' -exec rm -rf {} \;
+RUN find $HADOOP_PREFIX/ $PIG_HOME/  \
+ $SQOOP_HOME/ $ZOOKEEPER_HOME/ \
+ -iname '*.cmd' -exec rm -rf {} \;
 
 #Volume mappings for cgroup
 VOLUME [ "/sys/fs/cgroup" ]
