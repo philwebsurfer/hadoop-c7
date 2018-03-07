@@ -25,7 +25,7 @@ ADD etc.tar.gz /
 VOLUME [ "/sys/fs/cgroup" ]
 VOLUME [ "/dfs" ]
 
-EXPOSE 22/tcp 50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 8188/tcp
+EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 8188/tcp 19888/tcp
 #ssh
 #EXPOSE 22/tcp 
 ##sec name node
