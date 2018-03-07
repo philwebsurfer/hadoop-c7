@@ -1,4 +1,4 @@
-FROM philwebsurfer/xenial-hadoop-vanilla:latest
+FROM philwebsurfer/xenial-hadoop-vanilla:2.8.3
 LABEL name="Ubuntu 16.04 - Hadoop 2.8" \
     vendor="philwebsurfer" \
     license="GPLv2" 
