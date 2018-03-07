@@ -17,7 +17,7 @@ RUN sed -i 's!\(archive\|security\)\.ubuntu\.com/!mirror.cogentco.com/pub/linux/
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
  vim openjdk-8-jdk-headless net-tools python telnet traceroute \
  iputils-ping dnsutils python3 curl wget less tzdata apt-file \
- bash-completion libssl-dev libsnappy-dev xzip
+ bash-completion libssl-dev libsnappy-dev xzip supervisor
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8; \
