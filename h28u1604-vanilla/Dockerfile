@@ -94,7 +94,7 @@ VOLUME [ "/sys/fs/cgroup" ]
 VOLUME [ "/dfs" ]
 
 #ssh
-EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 8188/tcp
+EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 8188/tcp 19888/tcp
 #sec name node
 #EXPOSE 50090/tcp 
 ##datanode dfsclient
@@ -119,5 +119,7 @@ EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 
 #EXPOSE 8088/tcp
 ##history server
 #EXPOSE 8188/tcp
+##history server
+#EXPOSE 19888/tcp
 CMD ["/bin/bash"]
 #CMD ["/bin/bash"]
