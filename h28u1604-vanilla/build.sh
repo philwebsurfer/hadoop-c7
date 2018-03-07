@@ -7,7 +7,6 @@ wget -c http://mirror.cogentco.com/pub/apache/pig/pig-0.17.0/pig-0.17.0.tar.gz
 wget -c http://mirror.cogentco.com/pub/apache/accumulo/1.8.1/accumulo-1.8.1-bin.tar.gz
 wget -c http://mirror.cogentco.com/pub/apache/hbase/stable/hbase-1.2.6-bin.tar.gz
 wget -c http://mirror.cogentco.com/pub/apache/zookeeper/zookeeper-3.4.11/zookeeper-3.4.11.tar.gz
-wget -c https://codeload.github.com/cloudera/hue/tar.gz/cdh5.13.2-release
 #wget -c http://www-us.apache.org/dist/hadoop/common/hadoop-2.8.3/hadoop-2.8.3.tar.gz
 
 echo 'Executing this to build:'
