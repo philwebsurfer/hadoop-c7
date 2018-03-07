@@ -1,4 +1,5 @@
 #!/bin/bash 
+#@desc: Building script
 wget -c http://mirror.cogentco.com/pub/apache/hadoop/common/hadoop-2.8.3/hadoop-2.8.3.tar.gz
 wget -c http://mirror.cogentco.com/pub/apache/hive/hive-2.3.2/apache-hive-2.3.2-bin.tar.gz
 wget -c http://mirror.cogentco.com/pub/apache/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz
