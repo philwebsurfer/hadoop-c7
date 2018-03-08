@@ -8,8 +8,8 @@ docker run -d \
   --memory=20g \
   --cpu-period="100000"  --cpu-quota="400000" \
   -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-  -v ~jaa6766/dfs_n2:/dfs \
-  --hostname slave1 -it \
+  -v ~jaa6766/dfs_n3:/dfs \
+  --hostname slave2 -it \
   philwebsurfer/xenial-hadoop-base:2.8.3
 #  -p 8088:8088 #hadoop web
 #  -p 1022:22 \ #ssh
