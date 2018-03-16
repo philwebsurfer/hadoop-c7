@@ -17,11 +17,11 @@ RUN sed -i 's!\(archive\|security\)\.ubuntu\.com/!mirror.cogentco.com/pub/linux/
  openjdk-8-jre-headless screen openssh-server openssh-client rsync \
  vim openjdk-8-jdk-headless net-tools python telnet traceroute \
  iputils-ping dnsutils python3 curl wget less tzdata apt-file \
- bash-completion libssl-dev libsnappy-dev xzip
+ bash-completion libssl-dev libsnappy-dev xzip supervisor
 # Taken from https://github.com/docker-library/docs/tree/master/ubuntu
 RUN rm -rf /var/lib/apt/lists/* && \
  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8; \
- rm -rf /etc/localtime; link /usr/share/zoneinfo/America/Mexico_City /etc/localtime; \
+ rm -rf /etc/localtime; ln -sf /usr/share/zoneinfo/America/Mexico_City /etc/localtime; \
  systemctl enable ssh
 ENV LANG=en_US.utf8 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
@@ -76,13 +76,13 @@ ENV HADOOP_PREFIX=/usr/local/hadoop \
 ENV YARN_CONF_DIR=$HADOOP_PREFIX/etc/hadoop \
  HCAT_HOME=$HIVE_HOME/hcatalog \
  PATH=$PATH:$HADOOP_PREFIX/sbin:$HADOOP_PREFIX/bin:\
-$PATH:$PIG_HOME/sbin:$PIG_HOME/bin:\
-$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin:\
-$PATH:$HCAT_HOME/sbin:$HCAT_HOME/bin:\
-$PATH:$SQOOP_HOME/sbin:$SQOOP_HOME/bin:\
-$PATH:$ACCUMULO_HOME/sbin:$ACCUMULO_HOME/bin:\
-$PATH:$ZOOKEEPER_HOME/sbin:$ZOOKEEPER_HOME/bin:\
-$PATH:$HBASE_HOME/sbin:$HBASE_HOME/bin 
+$PIG_HOME/sbin:$PIG_HOME/bin:\
+$HIVE_HOME/sbin:$HIVE_HOME/bin:\
+$HCAT_HOME/sbin:$HCAT_HOME/bin:\
+$SQOOP_HOME/sbin:$SQOOP_HOME/bin:\
+$ACCUMULO_HOME/sbin:$ACCUMULO_HOME/bin:\
+$ZOOKEEPER_HOME/sbin:$ZOOKEEPER_HOME/bin:\
+$HBASE_HOME/sbin:$HBASE_HOME/bin 
 
 #Remove bat files for Windows: disrupt the autocomplete :-@
 RUN find $HADOOP_PREFIX/ $PIG_HOME/  \
@@ -94,7 +94,7 @@ VOLUME [ "/sys/fs/cgroup" ]
 VOLUME [ "/dfs" ]
 
 #ssh
-EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 8188/tcp
+EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 8031/tcp 8032/tcp 8033/tcp 8088/tcp 8188/tcp 19888/tcp
 #sec name node
 #EXPOSE 50090/tcp 
 ##datanode dfsclient
@@ -119,5 +119,7 @@ EXPOSE 22/tcp  50090/tcp 50010/tcp 50020/tcp 50030 50070/tcp 50075/tcp 8030/tcp 
 #EXPOSE 8088/tcp
 ##history server
 #EXPOSE 8188/tcp
+##history server
+#EXPOSE 19888/tcp
 CMD ["/bin/bash"]
 #CMD ["/bin/bash"]
