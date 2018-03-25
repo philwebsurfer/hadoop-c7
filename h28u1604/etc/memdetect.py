@@ -3,6 +3,7 @@
 #@descr Returns proposed memory in MB for use in Hadoop
 import re 
 import math
+import os.path
 
 buffer = free = cache = total = None
 meminfo = open('/proc/meminfo', 'r')
@@ -41,6 +42,9 @@ for line in procinfo:
         if not re.match(".*/docker-", dockerd):
             continue
         #print(dockerd)
+        if not os.path.isfile("dockerd") and \
+                os.path.isfile("/sys/fs/cgroup/memory/memory.stat"):
+            dockerd = "/sys/fs/cgroup/memory/memory.stat"
         memstat = open(dockerd, 'r')
         for memline in memstat:
             memline = memline.strip()
