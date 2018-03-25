@@ -17,7 +17,7 @@ docker run -d \
   -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
   -v ~jaa6766/dfs_n1:/dfs \
   --hostname ja175904 -it \
-  -n master \
+  --name master \
   philwebsurfer/xenial-hadoop-base:2.8.3
 #  -p 8088:8088 #hadoop web
 #  -p 1022:22 \ #ssh

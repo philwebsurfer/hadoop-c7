@@ -5,7 +5,7 @@ docker stop $master 2>/dev/null || \
 docker rm $master 2>/dev/null
 docker run -d \
   -l slave2 \
-  -n slave2 \
+  --name slave2 \
   --memory=20g \
   --cpu-period="100000"  --cpu-quota="400000" \
   -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
